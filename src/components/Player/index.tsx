@@ -23,8 +23,6 @@ const { episodeList,
     hasNext,
     hasPrevious,
     clearPlayerState,
-    getCurrentProgressFromEpisode,
-    setCurrentProgress
     } = usePlayer()
   const audioRef = useRef<HTMLAudioElement>(null);
   const [progress, setProgress] = useState(0)
@@ -44,14 +42,14 @@ const { episodeList,
   const episode = episodeList[currentEpisodeIndex];
 
   function setupProgressListener() {
-    audioRef.current.currentTime = getCurrentProgressFromEpisode(episode);
+    audioRef.current.currentTime = 0;
 
     audioRef.current.addEventListener('timeupdate', () => {
       setProgress(Math.floor(audioRef.current.currentTime))
     })
-    audioRef.current.addEventListener('pause', () => {
-        setCurrentProgress(Math.floor(audioRef.current.currentTime))
-    })
+    // audioRef.current.addEventListener('pause', () => {
+    //     setCurrentProgress(Math.floor(audioRef.current.currentTime))
+    // })
   }
 
   function handleSeek(amount: number) {
