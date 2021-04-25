@@ -6,6 +6,8 @@ import { GetStaticProps } from "next";
 import api from "../services/api";
 import { convertDurationToTimeString } from "../utils/convertDurationToTimeString";
 import style from './home.module.scss'
+import { usePlayer } from "../context/PlayerContext";
+import { useEffect } from "react";
 
 type Episode = {
   id: string;
@@ -24,12 +26,15 @@ type HomeProps = {
 }
 
 export default function Home({ lastEpisodes, allEpisodes  }: HomeProps) {
+  const { playList, currentEpisodeIndex, togglePlay, isPlaying, play, getCurrentProgressFromEpisode, setCurrentProgress} = usePlayer();
+  const episodeList = [...lastEpisodes, ...allEpisodes];
+
  return(
    <div className={style.homepage}>
        <h2>Últimos lançamentos</h2>
      <section className={style.latestEpisodes}>
        <ul>
-         {lastEpisodes.map(episode => {
+         {lastEpisodes.map((episode, index) => {
            return(
             <li key={episode.id}>
               <div className={style.imageContainer}>
@@ -49,9 +54,19 @@ export default function Home({ lastEpisodes, allEpisodes  }: HomeProps) {
                   <span>{episode.publishedAt}</span>
                   <span>{episode.durationAsString}</span>
               </div>
-              <button type="button">
-                <img src="/play-green.svg" alt="Tocar episódio"/>
-              </button>
+              {
+                       isPlaying && currentEpisodeIndex === episodeList.indexOf(episode) ?
+                      (
+                        <button type="button" onClick={() => togglePlay()} >
+                        <img src="./pause-green.svg" alt="Pausar episódio"/>  
+                      </button>
+                      ) :
+                      (
+                        <button type="button" onClick={() => playList(episodeList, index)} >
+                        <img src="./play-green.svg" alt="Tocar episódio"/>  
+                      </button>
+                      )
+                     }   
             </li>
            )
          })}
@@ -71,7 +86,8 @@ export default function Home({ lastEpisodes, allEpisodes  }: HomeProps) {
              </tr>
            </thead>
            <tbody>
-             {allEpisodes.map(episode => {
+             {allEpisodes.map((episode, index) => {
+               
                return(
                  <tr key={episode.id}>
                    <td style={{width: 72}}>
@@ -91,9 +107,21 @@ export default function Home({ lastEpisodes, allEpisodes  }: HomeProps) {
                    <td>{episode.members}</td>
                    <td style={{width: 100}}>{episode.publishedAt}</td>
                    <td>{episode.durationAsString}</td>
-                   <td><button type="button">
-                    <img src="./play-green.svg" alt="Tocar episódio"/>  
-                   </button></td>
+                   <td>
+                     {
+                       isPlaying && currentEpisodeIndex === episodeList.indexOf(episode) ?
+                      (
+                        <button type="button" onClick={() => togglePlay()} >
+                        <img src="./pause-green.svg" alt="Pausar episódio"/>  
+                      </button>
+                      ) :
+                      (
+                        <button type="button" onClick={() => playList(episodeList, index + lastEpisodes.length)} >
+                        <img src="./play-green.svg" alt="Tocar episódio"/>  
+                      </button>
+                      )
+                     }   
+                   </td>
                  </tr>
                )
              })}

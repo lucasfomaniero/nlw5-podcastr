@@ -7,6 +7,8 @@ import Image from 'next/image'
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
 import styles from './episode.module.scss'
 import Link from 'next/link';
+import { usePlayer } from '../../context/PlayerContext';
+import { useEffect } from 'react';
 
 type Episode = {
     id: string;
@@ -26,7 +28,12 @@ type Episode = {
 
 export default function Episode({ episode }: EpisodeProps) {
     const router = useRouter();
+    const { play, setCurrentProgress, getCurrentProgressFromEpisode } = usePlayer();
 
+    if (router.isFallback) {
+        return <p>Carregando...</p>
+    }
+    
     return(
         <div className={styles.episode}>
             <div className={styles.thumbnailContainer}>
@@ -41,7 +48,7 @@ export default function Episode({ episode }: EpisodeProps) {
                     src={episode.thumbnail}
                     objectFit="cover"
                 />
-                <button type="button">
+                <button type="button" onClick={() => play(episode)}>
                     <img src="/play.svg" alt="Tocar episódio"/>
                 </button>
             </div>
@@ -62,7 +69,7 @@ export default function Episode({ episode }: EpisodeProps) {
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
         paths: [],
-        fallback: 'blocking'
+        fallback: true
     }
 }
 
