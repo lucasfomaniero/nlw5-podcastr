@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![NLW5 - cópia](https://user-images.githubusercontent.com/25959443/115980112-8c0c6c80-a560-11eb-9505-15d5c3bf35cb.png)
+
+This project was created in Rocketseat's Next Level Week #5, a programming event realized from April 19 to April 23.
+
+Podcastr is a application created with ReactJS and Next.js. With Podcastr, you can listen Rocketseat's podcasts and others will be added in the future.
 
 ## Getting Started
 
