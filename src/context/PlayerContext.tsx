@@ -48,8 +48,8 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
 
   function setCurrentProgress(progress: number) {
     setProgress(progress)
-    if (episodeList[currentEpisodeIndex]) {
-      localStorage.setItem(`@Podcastr:${episodeList[currentEpisodeIndex].id}`, String(progress))
+    if (episodeList) {
+      localStorage.setItem(`@Podcastr:${episodeList[currentEpisodeIndex]?.id}`, String(progress))
     }
   }
 
@@ -62,9 +62,7 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
     setEpisodeList([episode]);
     setCurrentEpisodeIndex(0);
     setIsPlaying(true);
-
     const currentProgress = getCurrentProgressFromEpisode(episode);
-    console.log(currentProgress)
     if (currentProgress) {
       setCurrentProgress(currentProgress)
     }
