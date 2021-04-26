@@ -28,12 +28,12 @@ type Episode = {
 
 export default function Episode({ episode }: EpisodeProps) {
     const router = useRouter();
-    const { play, setCurrentProgress, getCurrentProgressFromEpisode } = usePlayer();
+    const { play } = usePlayer();
 
     if (router.isFallback) {
         return <p>Carregando...</p>
     }
-    
+
     return(
         <div className={styles.episode}>
             <div className={styles.thumbnailContainer}>

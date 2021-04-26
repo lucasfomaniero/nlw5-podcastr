@@ -26,7 +26,7 @@ type HomeProps = {
 }
 
 export default function Home({ lastEpisodes, allEpisodes  }: HomeProps) {
-  const { playList, currentEpisodeIndex, togglePlay, isPlaying, play, getCurrentProgressFromEpisode, setCurrentProgress} = usePlayer();
+  const { playList, currentEpisodeIndex, togglePlay, isPlaying } = usePlayer();
   const episodeList = [...lastEpisodes, ...allEpisodes];
 
  return(
@@ -111,7 +111,7 @@ export default function Home({ lastEpisodes, allEpisodes  }: HomeProps) {
                      {
                        isPlaying && currentEpisodeIndex === episodeList.indexOf(episode) ?
                       (
-                        <button type="button" onClick={() => togglePlay()} >
+                      <button type="button" onClick={() => togglePlay()} >
                         <img src="./pause-green.svg" alt="Pausar episódio"/>  
                       </button>
                       ) :

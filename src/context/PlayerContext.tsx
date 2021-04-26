@@ -25,8 +25,8 @@ type PlayerContextData = {
   playNext: () => void,
   playPrevious: () => void,
   clearPlayerState: () => void,
-  getCurrentProgressFromEpisode: (episode: Episode) => number,
-  setCurrentProgress: (progress: number) =>  void,
+  // getCurrentProgressFromEpisode: (episode: Episode) => number,
+  // setCurrentProgress: (progress: number) =>  void,
   hasNext: boolean;
   hasPrevious: boolean;
   progress: number;
@@ -46,42 +46,39 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
   const [isShuffling, setIsShuffling] = useState(false)
   const [progress, setProgress] = useState(0);
 
-  function setCurrentProgress(progress: number) {
-    setProgress(progress)
-    if (episodeList[currentEpisodeIndex]) {
-      localStorage.setItem(`@Podcastr:${episodeList[currentEpisodeIndex].id}`, String(progress))
-    }
-  }
+  // function setCurrentProgress(progress: number) {
+  //   setProgress(progress)
+  //   if (episodeList) {
+  //     localStorage.setItem(`@Podcastr:${episodeList[currentEpisodeIndex]?.id}`, String(progress))
+  //   }
+  // }
 
-  function getCurrentProgressFromEpisode(episode: Episode): number {
-    const currentTime = Number(localStorage.getItem(`@Podcastr:${episode.id}`))
-    return  currentTime;
-  }
+  // function getCurrentProgressFromEpisode(episode: Episode): number {
+  //   const currentTime = Number(localStorage.getItem(`@Podcastr:${episode.id}`))
+  //   return  currentTime;
+  // }
 
   function play(episode: Episode) {
     setEpisodeList([episode]);
     setCurrentEpisodeIndex(0);
     setIsPlaying(true);
-
-    const currentProgress = getCurrentProgressFromEpisode(episode);
-    console.log(currentProgress)
-    if (currentProgress) {
-      setCurrentProgress(currentProgress)
-    }
+    // const currentProgress = getCurrentProgressFromEpisode(episode);
+    // if (currentProgress) {
+    //   setCurrentProgress(currentProgress)
+    // }
   }
 
   function playList(list: Episode[], index: number) {
     setEpisodeList(list)
     setCurrentEpisodeIndex(index)
     setIsPlaying(true)
-    const episode = list[index];
-    const currentProgress = getCurrentProgressFromEpisode(episode)
-    setCurrentProgress(currentProgress);
+    // const episode = list[index];
+    // const currentProgress = getCurrentProgressFromEpisode(episode)
+    // setCurrentProgress(currentProgress);
   }
 
   function togglePlay() {
     setIsPlaying(!isPlaying);
-    setCurrentProgress(progress);
   }
 
   function toggleLoop() {
@@ -138,9 +135,9 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
         toggleLoop,
         toggleShuffle,
         clearPlayerState,
-        progress,
-        setCurrentProgress,
-        getCurrentProgressFromEpisode
+        progress
+        // setCurrentProgress,
+        // getCurrentProgressFromEpisode
       }}
     >
       { children }
